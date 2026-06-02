@@ -964,8 +964,8 @@
         <label for="rdgComment">Комментарий</label>
         <textarea id="rdgComment" name="comment" placeholder="ЖК, площадь, стадия проекта, сроки"></textarea>
 
-        <button class="rdg-btn dark" type="submit">Отправить в WhatsApp</button>
-        <p class="rdg-small">Форма откроет WhatsApp с готовым текстом заявки. Ничего не отправится без вашего подтверждения.</p>
+        <button class="rdg-btn dark" type="submit">Отправить в Telegram</button>
+        <p class="rdg-small">Форма откроет Telegram-чат. Текст заявки будет скопирован, чтобы его можно было сразу вставить и отправить.</p>
       </form>
     </div>
   </section>
@@ -992,7 +992,13 @@
           "Комментарий: " + (comment || "не указан")
         ].join("\n");
 
-        window.open("https://wa.me/79515680992?text=" + encodeURIComponent(message), "_blank");
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(message).finally(function () {
+            window.open("https://t.me/artur_vakulin", "_blank");
+          });
+        } else {
+          window.open("https://t.me/artur_vakulin", "_blank");
+        }
       });
     })();
   </script>
